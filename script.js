@@ -120,7 +120,8 @@
 
     chalkSound.pause();
     chalkSound.currentTime = 0;
-    chalkSound.playbackRate = 1;
+    /* match the clip's length to the write animation, but keep the cap gentle so it never turns into a chipmunk speedup */
+    chalkSound.playbackRate = Math.min(1.8, Math.max(0.85, chalkSound.duration && isFinite(chalkSound.duration) ? chalkSound.duration / (writeTime/1000) : 1));
     chalkSound.play().catch(()=>{});
     setTimeout(()=> chalkSound.pause(), writeTime);
 
