@@ -232,6 +232,27 @@
   }
   .mute-btn:hover{background:rgba(20,15,8,.72)}
   .mute-btn:focus-visible{outline:2px dashed var(--chalk);outline-offset:3px}
+  .music-toast{
+    position:absolute;left:976px;top:664px;width:336px;
+    white-space:nowrap;
+    text-align:center;
+    background:rgba(20,15,8,.82);color:var(--chalk);
+    font-family:'EB Garamond',serif;font-style:italic;font-size:15px;
+    padding:8px 14px;border-radius:6px;
+    border:1px solid rgba(239,233,216,.16);
+    opacity:0;transform:translateY(6px);
+    transition:opacity .25s ease, transform .25s ease;
+    pointer-events:none;
+    z-index:20;
+  }
+  .music-toast::after{
+    content:"";position:absolute;left:50%;top:100%;
+    transform:translateX(-50%);
+    border:6px solid transparent;
+    border-top-color:rgba(20,15,8,.82);
+  }
+  .music-toast.show{opacity:1;transform:translateY(0)}
+
   .mute-btn .mute-btn__x{display:none}
   .mute-btn[aria-pressed="true"] .mute-btn__waves{display:none}
   .mute-btn[aria-pressed="true"] .mute-btn__x{display:block}

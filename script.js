@@ -17,16 +17,21 @@
   const line = document.getElementById('chalkLine');
   const smudge = document.getElementById('smudge');
   const chalkSound = document.getElementById('chalkSound');
+  const bgMusic = document.getElementById('bgMusic');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let pi = 0;
 
-  chalkSound.volume = 0.14;
+  chalkSound.volume = 0.18;
+  bgMusic.volume = 0.04;
 
-  /* mute toggle, persisted across visits */
+  const SONG_TITLE = 'お父さんの、本…！';
+
+  /* mute toggle, persisted across visits — kills both the chalk sound and the music */
   const muteBtn = document.getElementById('muteBtn');
   let muted = localStorage.getItem('dianoia-muted') === '1';
   function applyMuted(){
     chalkSound.muted = muted;
+    bgMusic.muted = muted;
     muteBtn.setAttribute('aria-pressed', String(muted));
     muteBtn.setAttribute('aria-label', muted ? 'Unmute sound' : 'Mute sound');
   }
@@ -37,7 +42,7 @@
     applyMuted();
   });
 
-  /* browsers block audio until a user gesture — prime it on the first one */
+  /* browsers block audio until a user gesture — prime the chalk sound on the first one */
   function unlockAudio(){
     chalkSound.play().then(()=>{
       chalkSound.pause();
@@ -48,6 +53,22 @@
   }
   window.addEventListener('pointerdown', unlockAudio);
   window.addEventListener('keydown', unlockAudio);
+
+  /* cassette: click to play, click again to pause — plus a little "now playing" tooltip */
+  const radioBtn = document.querySelector('.hotspot--radio');
+  const musicToast = document.getElementById('musicToast');
+  let toastTimer = null;
+  if(radioBtn && musicToast){
+    radioBtn.addEventListener('click', ()=>{
+      if(bgMusic.paused) bgMusic.play().catch(()=>{});
+      else bgMusic.pause();
+
+      musicToast.textContent = `music — ${SONG_TITLE}`;
+      musicToast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=> musicToast.classList.remove('show'), 3200);
+    });
+  }
 
   function setPhrase(text){
     line.classList.remove('erasing');

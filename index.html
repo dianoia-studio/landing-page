@@ -325,7 +325,7 @@
     </button>
 
     <!-- radio / boombox -->
-    <button class="hotspot hotspot--radio" data-overlay="playlist" aria-label="A radio — the playlist">
+    <button class="hotspot hotspot--radio" aria-label="A radio — playing music">
       <svg viewBox="0 0 275 128">
         <ellipse class="contact-shadow" cx="128" cy="132" rx="112" ry="7" fill="#1c1106"/>
         <!-- crossed antennas -->
@@ -368,6 +368,8 @@
         <rect x="94" y="118" width="26" height="9" rx="2" fill="#b0503a"/>
       </svg>
     </button>
+
+    <div class="music-toast" id="musicToast" role="status" aria-live="polite"></div>
 
     <!-- hourglass -->
     <button class="hotspot hotspot--hourglass" data-overlay="plan" aria-label="An hourglass — the ninety-day plan">
@@ -414,6 +416,7 @@
 </div>
 
 <audio id="chalkSound" src="assets/sound/chalkwriting.mp3" preload="auto"></audio>
+<audio id="bgMusic" src="assets/sound/background-music.mp3" preload="auto" loop></audio>
 
 <button class="mute-btn" id="muteBtn" aria-pressed="false" aria-label="Mute sound">
   <svg viewBox="0 0 24 24" width="20" height="20">
