@@ -21,7 +21,7 @@
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let pi = 0;
 
-  chalkSound.volume = 0.18;
+  chalkSound.volume = 0.3;
   const MUSIC_VOLUME = 0.07;
   const LOOP_FADE = 1.0; /* seconds of fade in/out around the loop seam */
   bgMusic.volume = MUSIC_VOLUME;
@@ -122,8 +122,11 @@
     chalkSound.currentTime = 0;
     /* match the clip's length to the write animation, but keep the cap gentle so it never turns into a chipmunk speedup */
     chalkSound.playbackRate = Math.min(1.8, Math.max(0.85, chalkSound.duration && isFinite(chalkSound.duration) ? chalkSound.duration / (writeTime/1000) : 1));
-    chalkSound.play().catch(()=>{});
-    setTimeout(()=> chalkSound.pause(), writeTime);
+    /* schedule the stop only once playback has actually begun, so a slow-to-start
+       play() can't leave the pause() timer firing on nothing and the sound running unchecked */
+    chalkSound.play().then(()=>{
+      setTimeout(()=> chalkSound.pause(), writeTime);
+    }).catch(()=>{});
 
     setTimeout(()=>{
       smudge.classList.remove('sweep');

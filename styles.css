@@ -88,11 +88,16 @@
   .mote{
     position:absolute;border-radius:50%;
     background:rgba(255,230,180,.5);filter:blur(1.5px);
-    animation:drift 22s ease-in-out infinite alternate;
+    animation:drift 22s ease-in-out infinite alternate,
+              twinkle 5s ease-in-out infinite;
   }
   @keyframes drift{
     from{transform:translate(0,0)}
     to{transform:translate(26px,-40px)}
+  }
+  @keyframes twinkle{
+    0%,100%{opacity:.15}
+    50%{opacity:.6}
   }
 
   /* chalk on the board */
