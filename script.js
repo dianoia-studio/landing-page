@@ -10,25 +10,62 @@
 
   /* chalk write / erase loop */
   const phrases = [
-    "the thinking is the important part.",
-    "practice does not make perfect —\ndeliberate practice does.",
-    "what if it could watch\nthe canvas unfold?"
+    "intelligence that lives on the chalkboard",
+    "keeps track of every stroke",
+    "always observing, in the background"
   ];
   const line = document.getElementById('chalkLine');
   const smudge = document.getElementById('smudge');
+  const chalkSound = document.getElementById('chalkSound');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let pi = 0;
+
+  chalkSound.volume = 0.14;
+
+  /* mute toggle, persisted across visits */
+  const muteBtn = document.getElementById('muteBtn');
+  let muted = localStorage.getItem('dianoia-muted') === '1';
+  function applyMuted(){
+    chalkSound.muted = muted;
+    muteBtn.setAttribute('aria-pressed', String(muted));
+    muteBtn.setAttribute('aria-label', muted ? 'Unmute sound' : 'Mute sound');
+  }
+  applyMuted();
+  muteBtn.addEventListener('click', ()=>{
+    muted = !muted;
+    localStorage.setItem('dianoia-muted', muted ? '1' : '0');
+    applyMuted();
+  });
+
+  /* browsers block audio until a user gesture — prime it on the first one */
+  function unlockAudio(){
+    chalkSound.play().then(()=>{
+      chalkSound.pause();
+      chalkSound.currentTime = 0;
+    }).catch(()=>{});
+    window.removeEventListener('pointerdown', unlockAudio);
+    window.removeEventListener('keydown', unlockAudio);
+  }
+  window.addEventListener('pointerdown', unlockAudio);
+  window.addEventListener('keydown', unlockAudio);
 
   function setPhrase(text){
     line.classList.remove('erasing');
     line.innerHTML = '';
     text.split('\n').forEach((seg, i)=>{
       if(i>0) line.appendChild(document.createElement('br'));
-      seg.split(' ').forEach(word=>{
-        const s = document.createElement('span');
-        s.className = 'w';
-        s.textContent = word;
-        line.appendChild(s);
+      const words = seg.split(' ');
+      words.forEach((word, wi)=>{
+        const wordSpan = document.createElement('span');
+        wordSpan.className = 'word';
+        word.split('').forEach(ch=>{
+          const s = document.createElement('span');
+          s.className = 'w';
+          s.textContent = ch;
+          wordSpan.appendChild(s);
+        });
+        line.appendChild(wordSpan);
+        if(wi < words.length - 1) line.appendChild(document.createTextNode(' '));
       });
     });
   }
@@ -36,8 +73,15 @@
   function writeLoop(){
     setPhrase(phrases[pi]);
     const words = line.querySelectorAll('.w');
-    words.forEach((w, i)=> setTimeout(()=> w.classList.add('on'), 120 + i*170));
-    const writeTime = 120 + words.length*170;
+    words.forEach((w, i)=> setTimeout(()=> w.classList.add('on'), 100 + i*24));
+    const writeTime = 100 + words.length*24;
+
+    chalkSound.pause();
+    chalkSound.currentTime = 0;
+    chalkSound.playbackRate = 1;
+    chalkSound.play().catch(()=>{});
+    setTimeout(()=> chalkSound.pause(), writeTime);
+
     setTimeout(()=>{
       smudge.classList.remove('sweep');
       void smudge.offsetWidth;
@@ -80,6 +124,19 @@
   document.querySelectorAll('.hotspot[data-overlay]').forEach(btn=>{
     btn.addEventListener('click', ()=> openOverlay(btn.dataset.overlay));
   });
+
+  /* hourglass: each click drains the sand once, then it snaps back with no animation */
+  const hourglassBtn = document.querySelector('.hotspot--hourglass');
+  if(hourglassBtn){
+    let resetTimer = null;
+    hourglassBtn.addEventListener('click', ()=>{
+      clearTimeout(resetTimer);
+      hourglassBtn.classList.remove('pouring');
+      void hourglassBtn.offsetWidth;
+      hourglassBtn.classList.add('pouring');
+      resetTimer = setTimeout(()=> hourglassBtn.classList.remove('pouring'), 3000);
+    });
+  }
   document.querySelectorAll('.overlay').forEach(ov=>{
     ov.addEventListener('click', e=>{ if(e.target === ov) closeOverlay(ov); });
     ov.querySelector('.close').addEventListener('click', ()=> closeOverlay(ov));

@@ -1,3 +1,13 @@
+  @font-face{
+    font-family:'Chalktastic';
+    src:url('assets/fonts/Chalktastic.ttf') format('truetype');
+    font-weight:normal;font-style:normal;font-display:swap;
+  }
+  @font-face{
+    font-family:'Chalktastic';
+    src:url('assets/fonts/Chalktastic-Italic.ttf') format('truetype');
+    font-weight:normal;font-style:italic;font-display:swap;
+  }
   :root{
     --slate:#243138;
     --slate-deep:#1b262c;
@@ -12,6 +22,7 @@
     --paper:#f3ebd9;
     --ink:#2b2620;
     --redpencil:#b0503a;
+    --gold-rim:#ffe6ad;
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html,body{width:100%;height:100%;overflow:hidden;background:#241d12}
@@ -35,7 +46,7 @@
   }
   .lampglow{
     position:absolute;inset:0;pointer-events:none;
-    background:radial-gradient(520px 380px at 420px 700px, rgba(255,196,120,.34), rgba(255,196,120,.10) 45%, transparent 72%);
+    background:radial-gradient(660px 505px at 275px 519px, rgba(255,196,120,.34), rgba(255,196,120,.10) 45%, transparent 72%);
     mix-blend-mode:screen;
     transition:opacity .45s ease;
   }
@@ -58,31 +69,32 @@
 
   /* chalk on the board */
   .board-title{
-    position:absolute;left:480px;top:132px;width:720px;
+    position:absolute;left:580px;top:132px;width:720px;
     text-align:center;
     font-family:'EB Garamond',serif;font-weight:500;
-    font-size:58px;letter-spacing:.28em;text-indent:.28em;
+    font-size:58px;letter-spacing:.28em;text-indent:.14em;
     color:var(--chalk);opacity:.9;
     text-shadow:0 0 6px rgba(239,233,216,.3);
     transform:rotate(-.4deg);
     pointer-events:none;
+    filter:url(#chalkTexture);
   }
   .chalk-line{
-    position:absolute;left:470px;top:352px;width:740px;
+    position:absolute;left:570px;top:352px;width:740px;
     font-family:'Caveat',cursive;font-weight:600;
     font-size:56px;line-height:1.25;text-align:center;
     color:var(--chalk);
     text-shadow:0 0 5px rgba(239,233,216,.3);
     pointer-events:none;
+    filter:url(#chalkTexture);
   }
+  .chalk-line .word{display:inline-block;white-space:nowrap}
   .chalk-line .w{
     display:inline-block;opacity:0;
-    transform:translateY(4px) rotate(.4deg);
-    transition:opacity .28s ease-out, transform .28s ease-out;
-    margin:0 .15em;
+    filter:blur(2.5px);
+    transition:opacity .11s linear, filter .11s linear;
   }
-  .chalk-line .w:nth-child(odd){transform:translateY(3px) rotate(-.5deg)}
-  .chalk-line .w.on{opacity:.94;transform:translateY(0) rotate(0)}
+  .chalk-line .w.on{opacity:.94;filter:blur(0)}
   .chalk-line.erasing .w{opacity:0;filter:blur(3px);transition:opacity .5s ease, filter .5s ease}
   .eraser-smudge{
     position:absolute;left:470px;top:330px;width:180px;height:130px;
@@ -97,10 +109,11 @@
     100%{opacity:0;transform:translateX(560px)}
   }
   .hint{
-    position:absolute;left:404px;top:632px;width:220px;
+    position:absolute;left:480px;top:632px;width:200px;
     font-family:'Caveat',cursive;font-size:27px;line-height:1.1;
     color:var(--chalk-dim);transform:rotate(-2.5deg);
     pointer-events:none;
+    filter:url(#chalkTextureSmall);
   }
 
   /* hotspots */
@@ -117,13 +130,45 @@
   .hotspot:active svg{transform:translate(-1px,2px);transition:transform 70ms ease-out}
   .hotspot:focus-visible{outline:2px dashed var(--chalk);outline-offset:6px;border-radius:6px}
 
-  .hotspot--board{left:372px;top:92px;width:1136px;height:600px;border-radius:8px}
-  .hotspot--tablet{left:66px;top:596px;width:200px;height:230px}
-  .hotspot--notebook{left:508px;top:714px;width:284px;height:126px}
-  .hotspot--card{left:826px;top:722px;width:156px;height:112px}
-  .hotspot--radio{left:1016px;top:682px;width:256px;height:150px}
-  .hotspot--hourglass{left:1326px;top:652px;width:104px;height:180px}
-  .hotspot--lamp{left:296px;top:596px;width:170px;height:216px;cursor:pointer}
+  .hotspot--tablet{left:164px;top:612px;width:285px;height:233px}
+  .hotspot--notebook{left:508px;top:729px;width:284px;height:140px}
+  .hotspot--card{left:388px;top:88px;width:150px;height:108px}
+  .hotspot--radio{left:1016px;top:717px;width:256px;height:120px}
+  .contact-shadow{opacity:.4;filter:blur(6px)}
+  .hotspot--hourglass{left:1326px;top:665px;width:104px;height:180px}
+
+  /* hourglass: static at rest; clicking drains the sand once (one direction only, cropped
+     via clipPath so it always matches the glass's taper), holds, then snaps straight back
+     to the starting look with no animation, ready for next time */
+  .hourglass-flip{transform-box:fill-box;transform-origin:50% 50%}
+  .sand-stream{opacity:0}
+  .sand-stream .grain{animation:grainFall .5s linear infinite}
+  .sand-stream .grain2{animation-delay:.17s}
+  .sand-stream .grain3{animation-delay:.34s}
+
+  .hotspot--hourglass.pouring .clip-top-rect{animation:clipTopDrain 2s ease-in-out forwards}
+  .hotspot--hourglass.pouring .clip-bottom-rect{animation:clipBottomFill 2s ease-in-out forwards}
+  .hotspot--hourglass.pouring .sand-stream{animation:sandPourStream 2s ease-in-out}
+
+  @keyframes clipTopDrain{
+    0%{y:23px;height:64px}
+    100%{y:87px;height:0px}
+  }
+  @keyframes clipBottomFill{
+    0%{y:157px;height:0px}
+    100%{y:95px;height:62px}
+  }
+  @keyframes sandPourStream{
+    0%,100%{opacity:0}
+    10%,85%{opacity:1}
+    95%,100%{opacity:0}
+  }
+  @keyframes grainFall{
+    0%{transform:translateY(-2px);opacity:0}
+    50%{opacity:1}
+    100%{transform:translateY(8px);opacity:0}
+  }
+  .hotspot--lamp{left:-60px;top:365px;width:378px;height:520px;cursor:pointer}
 
   /* overlays */
   .overlay{
@@ -145,6 +190,9 @@
   }
   .overlay.open .letter{transform:translateY(0)}
   .letter::before{content:"";position:absolute;inset:10px;border:1px solid rgba(43,38,32,.12);pointer-events:none}
+  .letter--image{width:min(760px, calc(100vw - 40px))}
+  .letter--image img{display:block;width:100%;border-radius:2px;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+  .letter--image img.placeholder-img{width:220px;max-width:50%;margin:0 auto}
   .stamp{
     width:52px;height:52px;margin:0 auto 26px;
     display:flex;align-items:center;justify-content:center;
@@ -173,8 +221,25 @@
   .close:hover{opacity:1}
   .close:focus-visible{outline:2px dashed var(--ink);outline-offset:2px}
 
+  .mute-btn{
+    position:fixed;top:20px;right:20px;z-index:50;
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(20,15,8,.5);border:1px solid rgba(239,233,216,.18);
+    color:var(--chalk);cursor:pointer;
+    backdrop-filter:blur(4px);
+    transition:background .2s ease;
+  }
+  .mute-btn:hover{background:rgba(20,15,8,.72)}
+  .mute-btn:focus-visible{outline:2px dashed var(--chalk);outline-offset:3px}
+  .mute-btn .mute-btn__x{display:none}
+  .mute-btn[aria-pressed="true"] .mute-btn__waves{display:none}
+  .mute-btn[aria-pressed="true"] .mute-btn__x{display:block}
+
   @media (prefers-reduced-motion: reduce){
     .hotspot svg,.overlay,.letter,.sunbeam,.lampglow{transition:none}
-    .chalk-line .w{transition:none;opacity:.94;transform:none}
+    .chalk-line .w{transition:none;opacity:.94;filter:none}
     .eraser-smudge,.mote{display:none;animation:none}
+    .hourglass-flip,.sand-stream,.sand-stream .grain{animation:none}
+    .clip-top-rect,.clip-bottom-rect{animation:none}
   }
