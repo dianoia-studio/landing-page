@@ -22,9 +22,30 @@
   let pi = 0;
 
   chalkSound.volume = 0.18;
-  bgMusic.volume = 0.04;
+  const MUSIC_VOLUME = 0.07;
+  const LOOP_FADE = 1.0; /* seconds of fade in/out around the loop seam */
+  bgMusic.volume = MUSIC_VOLUME;
 
   const SONG_TITLE = 'お父さんの、本…！';
+
+
+  /* smooth loop: crossfade the seam instead of an abrupt restart */
+  bgMusic.addEventListener('timeupdate', () => {
+    if(!bgMusic.duration || !isFinite(bgMusic.duration)) return;
+    const t = bgMusic.currentTime;
+    const remaining = bgMusic.duration - t;
+    if(t < LOOP_FADE){
+      bgMusic.volume = MUSIC_VOLUME * (t / LOOP_FADE);
+    } else if(remaining < LOOP_FADE){
+      bgMusic.volume = MUSIC_VOLUME * Math.max(0, remaining / LOOP_FADE);
+    } else {
+      bgMusic.volume = MUSIC_VOLUME;
+    }
+  });
+  bgMusic.addEventListener('ended', () => {
+    bgMusic.currentTime = 0;
+    bgMusic.play().catch(()=>{});
+  });
 
   /* mute toggle, persisted across visits — kills both the chalk sound and the music */
   const muteBtn = document.getElementById('muteBtn');
