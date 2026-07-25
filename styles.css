@@ -34,6 +34,7 @@
     width:1600px;height:1000px;
     transform:translate(-50%,-50%) scale(1);
     transform-origin:center center;
+    filter:sepia(.18) saturate(.8) contrast(1.08) brightness(.96);
   }
   #stage > svg.scene{position:absolute;inset:0;width:100%;height:100%;display:block}
 
@@ -54,7 +55,34 @@
   #stage.lamp-off .sunbeam{opacity:.55}
   .vignette{
     position:absolute;inset:0;pointer-events:none;
-    background:radial-gradient(1250px 850px at 52% 42%, transparent 52%, rgba(20,12,4,.5) 100%);
+    background:radial-gradient(1150px 780px at 52% 42%, transparent 42%, rgba(20,12,4,.34) 78%, rgba(12,7,2,.7) 100%);
+  }
+  .grain{
+    position:absolute;inset:0;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:180px 180px;
+    opacity:.11;
+    mix-blend-mode:overlay;
+    animation:grainShift 8s steps(8) infinite;
+  }
+  @keyframes grainShift{
+    0%{background-position:0 0}
+    16%{background-position:-14px 8px}
+    33%{background-position:10px -10px}
+    50%{background-position:-8px -14px}
+    66%{background-position:14px 4px}
+    83%{background-position:-10px 10px}
+    100%{background-position:0 0}
+  }
+  .film-flicker{
+    position:absolute;inset:0;pointer-events:none;
+    background:#000;
+    mix-blend-mode:multiply;
+    animation:filmFlicker 7s ease-in-out infinite;
+  }
+  @keyframes filmFlicker{
+    0%,100%{opacity:.025}
+    50%{opacity:.04}
   }
   .motes{position:absolute;inset:0;pointer-events:none;overflow:hidden}
   .mote{
@@ -263,4 +291,5 @@
     .eraser-smudge,.mote{display:none;animation:none}
     .hourglass-flip,.sand-stream,.sand-stream .grain{animation:none}
     .clip-top-rect,.clip-bottom-rect{animation:none}
+    .grain,.film-flicker{animation:none;opacity:.03}
   }
