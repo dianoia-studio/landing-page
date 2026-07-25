@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dianoia — a study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="viewport">
+  <div id="stage">
+
+    <!-- ============ background scene ============ -->
+    <svg class="scene" viewBox="0 0 1600 1000" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#77684e"/>
+          <stop offset="1" stop-color="#544737"/>
+        </linearGradient>
+        <linearGradient id="slateGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#28363e"/>
+          <stop offset="1" stop-color="#1d2930"/>
+        </linearGradient>
+        <linearGradient id="cabTop" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#7c5731"/>
+          <stop offset="1" stop-color="#5c3f22"/>
+        </linearGradient>
+        <linearGradient id="cabFront" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#432d16"/>
+          <stop offset="1" stop-color="#301f0e"/>
+        </linearGradient>
+        <linearGradient id="shelfWood" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#5c3f22"/>
+          <stop offset="1" stop-color="#3d2913"/>
+        </linearGradient>
+        <radialGradient id="dust1" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="rgba(239,233,216,0.10)"/>
+          <stop offset="1" stop-color="rgba(239,233,216,0)"/>
+        </radialGradient>
+      </defs>
+
+      <!-- wall -->
+      <rect x="0" y="0" width="1600" height="810" fill="url(#wallGrad)"/>
+
+      <!-- ============ blackboard: the protagonist ============ -->
+      <!-- wood backing -->
+      <rect x="352" y="72" width="1176" height="640" rx="10" fill="var(--wood)"/>
+      <!-- brass face frame -->
+      <rect x="360" y="80" width="1160" height="624" rx="8" fill="none" stroke="var(--brass)" stroke-width="10"/>
+      <rect x="360" y="80" width="1160" height="624" rx="8" fill="none" stroke="var(--brass-hi)" stroke-width="2" opacity=".7"/>
+      <!-- slate -->
+      <rect x="374" y="94" width="1132" height="596" rx="4" fill="url(#slateGrad)"/>
+
+      <!-- erasure ghosts -->
+      <ellipse cx="620" cy="560" rx="150" ry="42" fill="url(#dust1)"/>
+      <ellipse cx="1120" cy="250" rx="180" ry="52" fill="url(#dust1)"/>
+      <ellipse cx="860" cy="470" rx="220" ry="64" fill="url(#dust1)"/>
+      <ellipse cx="1300" cy="580" rx="130" ry="44" fill="url(#dust1)"/>
+
+      <!-- static chalk working: left cluster -->
+      <g stroke="var(--chalk)" stroke-width="2.4" fill="none" opacity=".42" stroke-linecap="round">
+        <circle cx="520" cy="270" r="62"/>
+        <line x1="520" y1="270" x2="568" y2="232"/>
+        <line x1="520" y1="270" x2="520" y2="208"/>
+        <path d="M456 348 h120 M456 368 h96 M456 388 h108"/>
+        <path d="M446 340 l142 56" opacity=".8"/>
+        <path d="M600 300 q60 26 118 6"/>
+        <path d="M712 300 l10 -8 M712 300 l-2 -13"/>
+      </g>
+      <g font-family="Caveat, cursive" font-size="26" fill="var(--chalk)" opacity=".5">
+        <text x="452" y="470" transform="rotate(-2 452 470)">n → n+1 ?</text>
+        <text x="590" y="248">θ</text>
+      </g>
+
+      <!-- static chalk working: right cluster -->
+      <g stroke="var(--chalk)" stroke-width="2.4" fill="none" opacity=".42" stroke-linecap="round">
+        <path d="M1180 340 v150 h180"/>
+        <path d="M1188 470 q40 -66 96 -88 q40 -16 68 -20"/>
+        <path d="M1258 396 l8 -6 M1258 396 l-9 -3"/>
+        <path d="M1230 220 h150 M1230 244 h122 M1230 268 h138"/>
+        <path d="M1222 212 l166 66" opacity=".8"/>
+        <path d="M1050 560 q30 -40 74 -28 t70 30"/>
+      </g>
+      <g font-family="Caveat, cursive" font-size="26" fill="var(--chalk)" opacity=".5">
+        <text x="1385" y="500" transform="rotate(-1 1385 500)">t</text>
+        <text x="1165" y="330">f(x)</text>
+        <text x="1050" y="612" transform="rotate(-2 1050 612)">closer…</text>
+      </g>
+
+      <!-- chalk tray -->
+      <rect x="420" y="690" width="1040" height="16" rx="4" fill="var(--brass)"/>
+      <rect x="420" y="690" width="1040" height="5" rx="2" fill="var(--brass-hi)" opacity=".8"/>
+      <rect x="700" y="683" width="60" height="9" rx="4" fill="#e9e2d0"/>
+      <rect x="788" y="684" width="46" height="8" rx="4" fill="#dcd2bf" transform="rotate(2 811 688)"/>
+      <rect x="1150" y="679" width="78" height="15" rx="2" fill="#3f4a42"/>
+      <rect x="1150" y="679" width="78" height="6" rx="2" fill="#5d6b5c"/>
+
+      <!-- pinned note on board frame, top-left (from the sketch) -->
+      <g transform="translate(398 96) rotate(-3)">
+        <rect width="84" height="64" fill="#efe6d1"/>
+        <rect x="30" y="-5" width="24" height="10" fill="rgba(215,190,140,.85)"/>
+        <path d="M12 20 h60 M12 34 h46 M12 48 h54" stroke="#8b8172" stroke-width="2.5" fill="none" opacity=".7"/>
+      </g>
+
+      <!-- clock in the gap between shelf and board -->
+      <g transform="translate(304 152)">
+        <circle r="34" fill="#ece4d0" stroke="var(--brass)" stroke-width="6"/>
+        <line x1="0" y1="0" x2="0" y2="-20" stroke="#2b2620" stroke-width="3" stroke-linecap="round"/>
+        <line x1="0" y1="0" x2="13" y2="8" stroke="#2b2620" stroke-width="2.5" stroke-linecap="round"/>
+        <circle r="2.5" fill="#2b2620"/>
+      </g>
+
+      <!-- pinned note, right of board, bleeding off-frame (from the sketch) -->
+      <g transform="translate(1544 300) rotate(3)">
+        <rect width="76" height="92" fill="#e9dfc8"/>
+        <rect x="26" y="-5" width="24" height="10" fill="rgba(215,190,140,.85)"/>
+        <path d="M10 24 h50 M10 40 h38 M10 56 h44 M10 72 h30" stroke="#8b8172" stroke-width="2.5" fill="none" opacity=".65"/>
+      </g>
+
+      <!-- ============ bookshelf: cropped side accent ============ -->
+      <g>
+        <rect x="-40" y="86" width="300" height="560" fill="url(#shelfWood)"/>
+        <rect x="-40" y="86" width="300" height="14" fill="var(--wood-hi)"/>
+        <rect x="-40" y="632" width="300" height="14" fill="#2c1c0c"/>
+        <rect x="244" y="86" width="16" height="560" fill="#33210f"/>
+        <!-- shelf 1 -->
+        <rect x="-40" y="270" width="284" height="12" fill="var(--wood-hi)"/>
+        <g>
+          <rect x="-20" y="150" width="30" height="120" fill="#7a3f2c"/>
+          <rect x="14" y="162" width="26" height="108" fill="#3f5a4a"/>
+          <rect x="44" y="140" width="34" height="130" fill="#5a4a72"/>
+          <rect x="82" y="168" width="24" height="102" fill="#8a6a34"/>
+          <rect x="110" y="152" width="30" height="118" fill="#6e3a3a"/>
+          <rect x="150" y="238" width="70" height="14" fill="#7a5a34"/>
+          <rect x="156" y="222" width="58" height="14" fill="#4a5a6e"/>
+        </g>
+        <!-- shelf 2 -->
+        <rect x="-40" y="452" width="284" height="12" fill="var(--wood-hi)"/>
+        <g>
+          <rect x="-14" y="336" width="28" height="116" fill="#44584e"/>
+          <rect x="18" y="322" width="32" height="130" fill="#77452e"/>
+          <rect x="54" y="348" width="24" height="104" fill="#8a7444"/>
+          <!-- glass jar: the one alchemist nod -->
+          <path d="M110 368 h44 v10 q10 8 10 26 v36 q0 12 -12 12 h-40 q-12 0 -12 -12 v-36 q0 -18 10 -26 z" fill="rgba(120,180,190,.35)" stroke="rgba(200,230,235,.6)" stroke-width="2.5"/>
+          <rect x="106" y="418" width="52" height="30" rx="6" fill="rgba(80,150,165,.55)"/>
+          <rect x="116" y="360" width="32" height="10" rx="3" fill="var(--brass)"/>
+          <rect x="188" y="392" width="26" height="60" fill="#5c3a52"/>
+        </g>
+        <!-- lower cubby, mostly shadow -->
+        <rect x="-40" y="464" width="284" height="168" fill="#241708"/>
+        <rect x="-16" y="560" width="120" height="16" fill="#4a3a24" opacity=".8"/>
+      </g>
+
+      <!-- ============ cabinet: top surface + shallow front ============ -->
+      <rect x="0" y="800" width="1600" height="52" fill="url(#cabTop)"/>
+      <rect x="0" y="806" width="1600" height="3" fill="var(--brass-hi)" opacity=".5"/>
+      <rect x="0" y="852" width="1600" height="148" fill="url(#cabFront)"/>
+      <g stroke="#241708" stroke-width="3" opacity=".7">
+        <line x1="330" y1="862" x2="330" y2="1000"/>
+        <line x1="660" y1="862" x2="660" y2="1000"/>
+        <line x1="990" y1="862" x2="990" y2="1000"/>
+        <line x1="1320" y1="862" x2="1320" y2="1000"/>
+      </g>
+      <g fill="var(--brass)">
+        <rect x="140" y="912" width="52" height="9" rx="4"/>
+        <rect x="470" y="912" width="52" height="9" rx="4"/>
+        <rect x="800" y="912" width="52" height="9" rx="4"/>
+        <rect x="1130" y="912" width="52" height="9" rx="4"/>
+        <rect x="1440" y="912" width="52" height="9" rx="4"/>
+      </g>
+    </svg>
+
+    <!-- chalk content -->
+    <div class="board-title">DIANOIA</div>
+    <div class="eraser-smudge" id="smudge"></div>
+    <button class="hotspot hotspot--board" data-overlay="thesis" aria-label="Read the thesis on the blackboard"></button>
+    <div class="chalk-line" id="chalkLine" aria-hidden="true"></div>
+    <div class="hint">click around the study →</div>
+
+    <!-- ============ objects on the cabinet ============ -->
+
+    <!-- lamp (toggles the light) -->
+    <button class="hotspot hotspot--lamp" id="lampBtn" aria-pressed="false" aria-label="Toggle the lamp">
+      <svg viewBox="0 0 170 216">
+        <ellipse cx="88" cy="204" rx="52" ry="9" fill="#1c1106" opacity=".65"/>
+        <rect x="66" y="186" width="44" height="16" rx="7" fill="var(--brass)"/>
+        <line x1="88" y1="190" x2="52" y2="96" stroke="var(--brass)" stroke-width="9" stroke-linecap="round"/>
+        <line x1="52" y1="96" x2="96" y2="38" stroke="var(--brass)" stroke-width="9" stroke-linecap="round"/>
+        <g transform="translate(96 38) rotate(38)">
+          <path d="M0 0 L62 -25 L62 25 Z" fill="var(--brass-hi)"/>
+          <path d="M0 0 L62 -25 L62 25 Z" fill="#000" opacity=".16"/>
+          <circle cx="56" cy="0" r="11" fill="#ffe4b0"/>
+        </g>
+      </svg>
+    </button>
+
+    <!-- tablet + stylus leaning against the bookshelf -->
+    <button class="hotspot hotspot--tablet" data-overlay="prototype" aria-label="The prototype — tablet and stylus">
+      <svg viewBox="0 0 200 230">
+        <g transform="rotate(10 100 130)">
+          <rect x="48" y="24" width="122" height="178" rx="10" fill="#1b1c1e" stroke="#3c3d40" stroke-width="4"/>
+          <rect x="58" y="36" width="102" height="154" rx="4" fill="#242822"/>
+          <path d="M72 76 q20 -18 38 0 t36 5" stroke="rgba(239,233,216,.5)" stroke-width="2.8" fill="none"/>
+          <path d="M76 118 l24 24 M100 118 l-24 24" stroke="rgba(176,80,58,.75)" stroke-width="2.8"/>
+          <path d="M116 146 q16 -24 36 -10" stroke="rgba(239,233,216,.45)" stroke-width="2.8" fill="none"/>
+        </g>
+        <line x1="18" y1="218" x2="128" y2="202" stroke="#cfc8b8" stroke-width="6.5" stroke-linecap="round"/>
+        <line x1="18" y1="218" x2="34" y2="215.7" stroke="#5a5248" stroke-width="6.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <!-- notebook -->
+    <button class="hotspot hotspot--notebook" data-overlay="fragment" aria-label="An open notebook of scratch work">
+      <svg viewBox="0 0 284 126">
+        <path d="M10 24 Q142 8 274 24 L274 112 Q142 124 10 112 Z" fill="#efe6d1"/>
+        <path d="M142 18 L142 118" stroke="#c9bda4" stroke-width="3"/>
+        <path d="M10 24 Q142 8 274 24" fill="none" stroke="#c9bda4" stroke-width="2"/>
+        <g stroke="#6f665a" stroke-width="2.4" fill="none" opacity=".8">
+          <path d="M28 44 h86 M28 60 h70 M28 76 h80 M28 92 h60"/>
+        </g>
+        <path d="M26 58 L118 58" stroke="#b0503a" stroke-width="2.4" opacity=".8" transform="rotate(-1 72 58)"/>
+        <g stroke="#6f665a" stroke-width="2.4" fill="none" opacity=".8">
+          <path d="M160 46 q20 -14 40 0"/>
+          <circle cx="198" cy="80" r="15"/>
+          <path d="M160 106 h76"/>
+        </g>
+        <path d="M216 80 q22 -20 28 -36" stroke="#b0503a" stroke-width="2.4" fill="none" opacity=".85"/>
+      </svg>
+    </button>
+
+    <!-- lexicon card -->
+    <button class="hotspot hotspot--card" data-overlay="etymology" aria-label="A lexicon card — the word dianoia">
+      <svg viewBox="0 0 156 112">
+        <rect x="4" y="10" width="148" height="94" rx="3" fill="#f3ebd9" transform="rotate(-2 78 56)"/>
+        <rect x="4" y="10" width="148" height="94" rx="3" fill="none" stroke="#cfc2a6" stroke-width="2" transform="rotate(-2 78 56)"/>
+        <text x="78" y="52" text-anchor="middle" font-family="EB Garamond, serif" font-style="italic" font-size="26" fill="#2b2620" transform="rotate(-2 78 56)">διάνοια</text>
+        <line x1="34" y1="66" x2="122" y2="63" stroke="#b0503a" stroke-width="2" opacity=".7"/>
+        <text x="78" y="86" text-anchor="middle" font-family="EB Garamond, serif" font-size="13" fill="#6f665a" transform="rotate(-2 78 56)">to think through</text>
+      </svg>
+    </button>
+
+    <!-- radio / cassette (from the sketch: box with two round reels) -->
+    <button class="hotspot hotspot--radio" data-overlay="playlist" aria-label="A radio — the playlist">
+      <svg viewBox="0 0 256 150">
+        <rect x="8" y="30" width="240" height="110" rx="12" fill="#5c4a34"/>
+        <rect x="8" y="30" width="240" height="14" rx="7" fill="#6f5a40"/>
+        <rect x="24" y="54" width="208" height="60" rx="8" fill="#2e2718"/>
+        <circle cx="84" cy="84" r="21" fill="#191410" stroke="var(--brass)" stroke-width="4"/>
+        <circle cx="172" cy="84" r="21" fill="#191410" stroke="var(--brass)" stroke-width="4"/>
+        <g stroke="var(--brass)" stroke-width="3">
+          <line x1="84" y1="70" x2="84" y2="98"/><line x1="70" y1="84" x2="98" y2="84"/>
+          <line x1="172" y1="70" x2="172" y2="98"/><line x1="158" y1="84" x2="186" y2="84"/>
+        </g>
+        <rect x="112" y="76" width="32" height="16" rx="2" fill="#efe6d1"/>
+        <rect x="30" y="122" width="26" height="10" rx="2" fill="var(--brass)"/>
+        <rect x="62" y="122" width="26" height="10" rx="2" fill="var(--brass)"/>
+        <rect x="94" y="122" width="26" height="10" rx="2" fill="#b0503a"/>
+        <line x1="236" y1="34" x2="252" y2="6" stroke="var(--brass)" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <!-- hourglass -->
+    <button class="hotspot hotspot--hourglass" data-overlay="plan" aria-label="An hourglass — the ninety-day plan">
+      <svg viewBox="0 0 104 180">
+        <rect x="16" y="8" width="72" height="13" rx="5" fill="var(--brass)"/>
+        <rect x="16" y="159" width="72" height="13" rx="5" fill="var(--brass)"/>
+        <path d="M24 21 L80 21 L56 88 L56 94 L80 159 L24 159 L48 94 L48 88 Z" fill="rgba(220,232,228,.15)" stroke="rgba(230,238,232,.5)" stroke-width="3"/>
+        <path d="M34 25 L70 25 L54 70 L50 70 Z" fill="#d9b46a"/>
+        <path d="M32 155 L72 155 L58 124 L46 124 Z" fill="#d9b46a"/>
+        <line x1="52" y1="92" x2="52" y2="122" stroke="#d9b46a" stroke-width="3"/>
+      </svg>
+    </button>
+
+    <div class="sunbeam" aria-hidden="true"></div>
+    <div class="lampglow" aria-hidden="true"></div>
+    <div class="motes" aria-hidden="true">
+      <span class="mote" style="left:520px;top:300px;width:4px;height:4px;animation-delay:0s"></span>
+      <span class="mote" style="left:760px;top:420px;width:3px;height:3px;animation-delay:-6s"></span>
+      <span class="mote" style="left:980px;top:250px;width:4px;height:4px;animation-delay:-11s"></span>
+      <span class="mote" style="left:640px;top:560px;width:3px;height:3px;animation-delay:-15s"></span>
+      <span class="mote" style="left:1180px;top:480px;width:4px;height:4px;animation-delay:-3s"></span>
+    </div>
+    <div class="vignette" aria-hidden="true"></div>
+  </div>
+</div>
+
+<!-- ============ overlays ============ -->
+
+<div class="overlay" id="ov-thesis" role="dialog" aria-modal="true" aria-labelledby="t-thesis">
+  <div class="letter">
+    <button class="close" aria-label="Close">&times;</button>
+    <div class="stamp">Δ</div>
+    <h2 id="t-thesis">the thinking is the important part</h2>
+    <p>For centuries, writing and sketching freely have been a medium for rich thought. AI is building a new medium mostly through typing and voice — but the freeform one, the paper and the whiteboard, is still nearly untouched.</p>
+    <p>On the page, the end result is rarely what matters. What matters is the thinking that happened across time: the route tried first, the dead ends, the erased attempts, the arrow that finally joins two ideas.</p>
+    <p><span class="greek">Dianoia</span> is an experiment in letting AI see that — the whole canvas as it develops — and asking it to hold back. It watches quietly, offers hints only when asked, and gives you a post-mortem when you're done. The reasoning stays yours.</p>
+    <p class="sig">— Serene, day 0 of 90</p>
+  </div>
+</div>
+
+<div class="overlay" id="ov-fragment" role="dialog" aria-modal="true" aria-labelledby="t-fragment">
+  <div class="letter">
+    <button class="close" aria-label="Close">&times;</button>
+    <div class="stamp">Δ</div>
+    <h2 id="t-fragment">a fragment of scratch work</h2>
+    <div class="scrap">
+      try induction on n?
+      <span class="cross">base case n=1 ... assume k, show k+1 ...</span><br>
+      wait — what breaks for n=2?
+      <span class="margin-note">↳ you erased this at 4:12. it was closer than you thought.</span>
+    </div>
+    <p>The observer doesn't interrupt. It notices — the fast strokes, the slow ones, the crossing-out, the long pause — and saves what it sees for afterwards.</p>
+    <p>The feedback after a completed attempt is worth more than hints during it. Practice does not make perfect; deliberate practice does.</p>
+  </div>
+</div>
+
+<div class="overlay" id="ov-etymology" role="dialog" aria-modal="true" aria-labelledby="t-ety">
+  <div class="letter">
+    <button class="close" aria-label="Close">&times;</button>
+    <div class="stamp">Δ</div>
+    <h2 id="t-ety">διάνοια</h2>
+    <p><span class="greek">διάνοια</span> — from <span class="greek">διά</span> (through) + <span class="greek">νοῦς</span> (mind): to think something through, step by step.</p>
+    <p>Its cousin: <span class="greek">διάγραμμα</span> — from <span class="greek">διά</span> + <span class="greek">γράμμα</span>: that which is drawn through. Thought-through and drawn-through share a root.</p>
+    <p>In Plato's <span class="greek">Republic</span>, dianoia is the mode of the geometers — reasoning that leans on visible diagrams to reach invisible truths. It is, quite literally, thinking with scratch work.</p>
+  </div>
+</div>
+
+<div class="overlay" id="ov-playlist" role="dialog" aria-modal="true" aria-labelledby="t-play">
+  <div class="letter">
+    <button class="close" aria-label="Close">&times;</button>
+    <div class="stamp">Δ</div>
+    <h2 id="t-play">the dianoia tapes</h2>
+    <p>Every project deserves its own soundtrack. This one thinks best to slow, unhurried music — the kind you can mull a problem over to.</p>
+    <p><a href="#" aria-disabled="true">→ open the playlist</a> <em>(paste your link here)</em></p>
+  </div>
+</div>
+
+<div class="overlay" id="ov-plan" role="dialog" aria-modal="true" aria-labelledby="t-plan">
+  <div class="letter">
+    <button class="close" aria-label="Close">&times;</button>
+    <div class="stamp">Δ</div>
+    <h2 id="t-plan">ninety days</h2>
+    <ol>
+      <li><strong>The canvas.</strong> A browser whiteboard you can draw on with a stylus, with an AI observer watching the scratch work evolve.</li>
+      <li><strong>The first walkthrough.</strong> One simple problem, end to end — solve, finish, receive a post-mortem.</li>
+      <li><strong>Iteration.</strong> More problem types, and testing with real people across multiple days — clarity not just once, but over time.</li>
+    </ol>
+    <p class="sig">built in the open</p>
+  </div>
+</div>
+
+<div class="overlay" id="ov-prototype" role="dialog" aria-modal="true" aria-labelledby="t-proto">
+  <div class="letter">
+    <button class="close" aria-label="Close">&times;</button>
+    <div class="stamp">Δ</div>
+    <h2 id="t-proto">the prototype</h2>
+    <p>IMAGE ABOUT WHAT IT SHOULD LOOK LIKE??</p>
+    <p class="sig">day 0</p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
